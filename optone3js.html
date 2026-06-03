@@ -1,9 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Three.js Landing Page</title>
+<title>Landing Page</title>
 
 <style>
 *{
@@ -13,213 +14,156 @@
 }
 
 body{
-    overflow:hidden;
-    font-family:Arial, sans-serif;
-    background:#000;
-}
-
-canvas{
-    position:fixed;
-    top:0;
-    left:0;
-    z-index:-1;
+    font-family:system-ui,-apple-system,sans-serif;
+    background:#0f172a;
+    color:white;
+    overflow-x:hidden;
 }
 
 .hero{
-    height:100vh;
+    min-height:100vh;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
     text-align:center;
-    color:white;
-    padding:20px;
+    padding:2rem;
+    background:
+        radial-gradient(circle at top left,#2563eb 0%,transparent 40%),
+        radial-gradient(circle at bottom right,#7c3aed 0%,transparent 40%),
+        #0f172a;
 }
 
-.hero h1{
-    font-size:4rem;
-    margin-bottom:20px;
-    text-shadow:0 0 20px rgba(255,255,255,0.4);
+.badge{
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.15);
+    padding:.5rem 1rem;
+    border-radius:999px;
+    margin-bottom:1.5rem;
+    backdrop-filter:blur(10px);
 }
 
-.hero p{
+h1{
+    font-size:clamp(3rem,8vw,6rem);
+    line-height:1;
+    margin-bottom:1rem;
+}
+
+.highlight{
+    background:linear-gradient(90deg,#60a5fa,#a78bfa);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+p{
     max-width:700px;
     font-size:1.2rem;
-    margin-bottom:30px;
-    opacity:0.8;
+    opacity:.85;
+    margin-bottom:2rem;
+}
+
+.buttons{
+    display:flex;
+    gap:1rem;
+    flex-wrap:wrap;
+    justify-content:center;
 }
 
 .btn{
-    padding:15px 35px;
-    background:white;
-    color:black;
     text-decoration:none;
-    border-radius:50px;
-    font-weight:bold;
-    transition:0.3s;
+    padding:1rem 2rem;
+    border-radius:12px;
+    font-weight:600;
+    transition:.3s;
 }
 
-.btn:hover{
+.btn-primary{
+    background:white;
+    color:#0f172a;
+}
+
+.btn-primary:hover{
     transform:translateY(-3px);
+}
+
+.btn-secondary{
+    border:1px solid rgba(255,255,255,.2);
+    color:white;
+}
+
+.btn-secondary:hover{
+    background:rgba(255,255,255,.1);
+}
+
+.features{
+    max-width:1200px;
+    margin:auto;
+    padding:5rem 2rem;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:1.5rem;
+}
+
+.card{
+    background:#111827;
+    border:1px solid #1f2937;
+    padding:2rem;
+    border-radius:20px;
+}
+
+.card h3{
+    margin-bottom:1rem;
+}
+
+footer{
+    text-align:center;
+    padding:2rem;
+    opacity:.6;
 }
 </style>
 </head>
 <body>
 
-<div class="hero">
-    <h1>Future Starts Here</h1>
+<section class="hero">
+    <div class="badge">🚀 Live on GitHub Pages</div>
+
+    <h1>
+        Build Something
+        <span class="highlight">Amazing</span>
+    </h1>
+
     <p>
-        Build immersive digital experiences with Three.js.
-        Stunning visuals, smooth animations, and modern web design.
+        A modern one-file landing page. No frameworks, no build tools,
+        just HTML and CSS.
     </p>
 
-    <a href="#" class="btn">
-        Get Started
-    </a>
-</div>
+    <div class="buttons">
+        <a href="#" class="btn btn-primary">Get Started</a>
+        <a href="#features" class="btn btn-secondary">Learn More</a>
+    </div>
+</section>
 
-<script type="module">
+<section id="features" class="features">
+    <div class="card">
+        <h3>⚡ Fast</h3>
+        <p>Single HTML file with zero dependencies.</p>
+    </div>
 
-import * as THREE from 'https://unpkg.com/three@0.166.1/build/three.module.js';
+    <div class="card">
+        <h3>📱 Responsive</h3>
+        <p>Works on desktop, tablet and mobile devices.</p>
+    </div>
 
-const scene = new THREE.Scene();
+    <div class="card">
+        <h3>🎨 Modern</h3>
+        <p>Gradient design with clean typography.</p>
+    </div>
+</section>
 
-const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth/window.innerHeight,
-    0.1,
-    1000
-);
-
-const renderer = new THREE.WebGLRenderer({
-    antialias:true
-});
-
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
-
-camera.position.z = 15;
-
-/* PARTICLES */
-
-const particleCount = 2500;
-
-const geometry = new THREE.BufferGeometry();
-
-const positions = new Float32Array(
-    particleCount * 3
-);
-
-for(let i=0;i<particleCount*3;i++){
-    positions[i] = (Math.random()-0.5)*100;
-}
-
-geometry.setAttribute(
-    'position',
-    new THREE.BufferAttribute(positions,3)
-);
-
-const material = new THREE.PointsMaterial({
-    color:0xffffff,
-    size:0.08
-});
-
-const particles = new THREE.Points(
-    geometry,
-    material
-);
-
-scene.add(particles);
-
-/* GLOWING SPHERE */
-
-const sphereGeometry =
-    new THREE.IcosahedronGeometry(3,1);
-
-const sphereMaterial =
-    new THREE.MeshStandardMaterial({
-        color:0x00ffff,
-        wireframe:true
-    });
-
-const sphere =
-    new THREE.Mesh(
-        sphereGeometry,
-        sphereMaterial
-    );
-
-scene.add(sphere);
-
-/* LIGHTING */
-
-const light1 =
-    new THREE.PointLight(
-        0xffffff,
-        2
-    );
-
-light1.position.set(
-    10,
-    10,
-    10
-);
-
-scene.add(light1);
-
-const light2 =
-    new THREE.PointLight(
-        0x00ffff,
-        4
-    );
-
-light2.position.set(
-    -10,
-    -10,
-    10
-);
-
-scene.add(light2);
-
-/* ANIMATION */
-
-function animate(){
-
-    requestAnimationFrame(
-        animate
-    );
-
-    sphere.rotation.x += 0.003;
-    sphere.rotation.y += 0.005;
-
-    particles.rotation.y += 0.0005;
-
-    renderer.render(
-        scene,
-        camera
-    );
-}
-
-animate();
-
-/* RESPONSIVE */
-
-window.addEventListener(
-    'resize',
-    ()=>{
-        camera.aspect =
-            window.innerWidth /
-            window.innerHeight;
-
-        camera.updateProjectionMatrix();
-
-        renderer.setSize(
-            window.innerWidth,
-            window.innerHeight
-        );
-    }
-);
-
-</script>
+<footer>
+    © 2026 Your Company. All rights reserved.
+</footer>
 
 </body>
 </html>
+```
