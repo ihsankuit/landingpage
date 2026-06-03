@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Three.js Landing Page</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    overflow:hidden;
+    font-family:Arial, sans-serif;
+    background:#000;
+}
+
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-1;
+}
+
+.hero{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+    padding:20px;
+}
+
+.hero h1{
+    font-size:4rem;
+    margin-bottom:20px;
+    text-shadow:0 0 20px rgba(255,255,255,0.4);
+}
+
+.hero p{
+    max-width:700px;
+    font-size:1.2rem;
+    margin-bottom:30px;
+    opacity:0.8;
+}
+
+.btn{
+    padding:15px 35px;
+    background:white;
+    color:black;
+    text-decoration:none;
+    border-radius:50px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>Future Starts Here</h1>
+    <p>
+        Build immersive digital experiences with Three.js.
+        Stunning visuals, smooth animations, and modern web design.
+    </p>
+
+    <a href="#" class="btn">
+        Get Started
+    </a>
+</div>
+
+<script type="module">
+
+import * as THREE from 'https://unpkg.com/three@0.166.1/build/three.module.js';
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth/window.innerHeight,
+    0.1,
+    1000
+);
+
+const renderer = new THREE.WebGLRenderer({
+    antialias:true
+});
+
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+camera.position.z = 15;
+
+/* PARTICLES */
+
+const particleCount = 2500;
+
+const geometry = new THREE.BufferGeometry();
+
+const positions = new Float32Array(
+    particleCount * 3
+);
+
+for(let i=0;i<particleCount*3;i++){
+    positions[i] = (Math.random()-0.5)*100;
+}
+
+geometry.setAttribute(
+    'position',
+    new THREE.BufferAttribute(positions,3)
+);
+
+const material = new THREE.PointsMaterial({
+    color:0xffffff,
+    size:0.08
+});
+
+const particles = new THREE.Points(
+    geometry,
+    material
+);
+
+scene.add(particles);
+
+/* GLOWING SPHERE */
+
+const sphereGeometry =
+    new THREE.IcosahedronGeometry(3,1);
+
+const sphereMaterial =
+    new THREE.MeshStandardMaterial({
+        color:0x00ffff,
+        wireframe:true
+    });
+
+const sphere =
+    new THREE.Mesh(
+        sphereGeometry,
+        sphereMaterial
+    );
+
+scene.add(sphere);
+
+/* LIGHTING */
+
+const light1 =
+    new THREE.PointLight(
+        0xffffff,
+        2
+    );
+
+light1.position.set(
+    10,
+    10,
+    10
+);
+
+scene.add(light1);
+
+const light2 =
+    new THREE.PointLight(
+        0x00ffff,
+        4
+    );
+
+light2.position.set(
+    -10,
+    -10,
+    10
+);
+
+scene.add(light2);
+
+/* ANIMATION */
+
+function animate(){
+
+    requestAnimationFrame(
+        animate
+    );
+
+    sphere.rotation.x += 0.003;
+    sphere.rotation.y += 0.005;
+
+    particles.rotation.y += 0.0005;
+
+    renderer.render(
+        scene,
+        camera
+    );
+}
+
+animate();
+
+/* RESPONSIVE */
+
+window.addEventListener(
+    'resize',
+    ()=>{
+        camera.aspect =
+            window.innerWidth /
+            window.innerHeight;
+
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(
+            window.innerWidth,
+            window.innerHeight
+        );
+    }
+);
+
+</script>
+
+</body>
+</html>
