@@ -1,167 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Landing Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Static Web App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
 
-body{
-    font-family:system-ui,-apple-system,sans-serif;
-    background:#0f172a;
-    color:white;
-    overflow-x:hidden;
-}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-.hero{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:2rem;
-    background:
-        radial-gradient(circle at top left,#2563eb 0%,transparent 40%),
-        radial-gradient(circle at bottom right,#7c3aed 0%,transparent 40%),
-        #0f172a;
-}
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-.badge{
-    background:rgba(255,255,255,.1);
-    border:1px solid rgba(255,255,255,.15);
-    padding:.5rem 1rem;
-    border-radius:999px;
-    margin-bottom:1.5rem;
-    backdrop-filter:blur(10px);
-}
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-h1{
-    font-size:clamp(3rem,8vw,6rem);
-    line-height:1;
-    margin-bottom:1rem;
-}
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
 
-.highlight{
-    background:linear-gradient(90deg,#60a5fa,#a78bfa);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
 
-p{
-    max-width:700px;
-    font-size:1.2rem;
-    opacity:.85;
-    margin-bottom:2rem;
-}
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
 
-.buttons{
-    display:flex;
-    gap:1rem;
-    flex-wrap:wrap;
-    justify-content:center;
-}
+        .nav-links a:hover {
+            color: #667eea;
+        }
 
-.btn{
-    text-decoration:none;
-    padding:1rem 2rem;
-    border-radius:12px;
-    font-weight:600;
-    transition:.3s;
-}
+        .hero {
+            background: white;
+            margin: 40px 0;
+            padding: 60px 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
 
-.btn-primary{
-    background:white;
-    color:#0f172a;
-}
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
 
-.btn-primary:hover{
-    transform:translateY(-3px);
-}
+        .hero p {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 30px;
+        }
 
-.btn-secondary{
-    border:1px solid rgba(255,255,255,.2);
-    color:white;
-}
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
 
-.btn-secondary:hover{
-    background:rgba(255,255,255,.1);
-}
+        .btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
 
-.features{
-    max-width:1200px;
-    margin:auto;
-    padding:5rem 2rem;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:1.5rem;
-}
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
 
-.card{
-    background:#111827;
-    border:1px solid #1f2937;
-    padding:2rem;
-    border-radius:20px;
-}
+        .feature-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
 
-.card h3{
-    margin-bottom:1rem;
-}
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
 
-footer{
-    text-align:center;
-    padding:2rem;
-    opacity:.6;
-}
-</style>
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin: 40px 0;
+        }
+
+        .contact-form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #667eea;
+            font-size: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 40px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        footer p {
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">WebApp</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-<section class="hero">
-    <div class="badge">🚀 Live on GitHub Pages</div>
+    <main class="container">
+        <section id="home" class="hero">
+            <h1>Welcome to Our Platform</h1>
+            <p>Build amazing things with our powerful tools and services</p>
+            <button class="btn" onclick="showMessage()">Get Started</button>
+        </section>
 
-    <h1>
-        Build Something
-        <span class="highlight">Amazing</span>
-    </h1>
+        <section id="features" class="features">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Fast Performance</h3>
+                <p>Lightning-fast load times and optimized performance for the best user experience.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure & Reliable</h3>
+                <p>Enterprise-grade security with 99.9% uptime guarantee for your peace of mind.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Responsive Design</h3>
+                <p>Perfectly optimized for all devices - desktop, tablet, and mobile.</p>
+            </div>
+        </section>
 
-    <p>
-        A modern one-file landing page. No frameworks, no build tools,
-        just HTML and CSS.
-    </p>
+        <section id="contact" class="contact-form">
+            <h2>Contact Us</h2>
+            <form onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" required></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </section>
+    </main>
 
-    <div class="buttons">
-        <a href="#" class="btn btn-primary">Get Started</a>
-        <a href="#features" class="btn btn-secondary">Learn More</a>
-    </div>
-</section>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 WebApp. All rights reserved.</p>
+        </div>
+    </footer>
 
-<section id="features" class="features">
-    <div class="card">
-        <h3>⚡ Fast</h3>
-        <p>Single HTML file with zero dependencies.</p>
-    </div>
+    <script>
+        function showMessage() {
+            alert('Welcome! Thank you for your interest.');
+        }
 
-    <div class="card">
-        <h3>📱 Responsive</h3>
-        <p>Works on desktop, tablet and mobile devices.</p>
-    </div>
+        function handleSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            alert(`Thank you ${name}! Your message has been received.\n\nWe'll contact you at ${email} soon.`);
+            
+            // Clear form
+            event.target.reset();
+        }
 
-    <div class="card">
-        <h3>🎨 Modern</h3>
-        <p>Gradient design with clean typography.</p>
-    </div>
-</section>
-
-<footer>
-    © 2026 Your Company. All rights reserved.
-</footer>
-
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
